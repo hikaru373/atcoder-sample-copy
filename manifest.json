@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "AtCoder Sample Copy",
+  "version": "1.0.0",
+  "description": "AtCoderの全サンプル入出力をワンクリックでコピーします。",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://atcoder.jp/contests/*/tasks/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
+}
