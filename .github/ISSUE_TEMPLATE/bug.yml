@@ -1,6 +1,6 @@
-name: Issue
+name: バグ
 description: バグや問題を記録する
-title: "[Issue]: "
+title: "[Bug]: "
 labels:
   - bug
 
