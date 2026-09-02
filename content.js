@@ -86,7 +86,7 @@
             button.textContent = "✓ コピーしました";
 
             setTimeout(() => {
-                button.textContent = "📋 サンプルを全部コピーa";
+                button.textContent = "📋 サンプルを全部コピー";
             }, 1500);
 
         } catch (error) {
@@ -108,7 +108,7 @@
         button.id = BUTTON_ID;
         button.type = "button";
         button.className = "btn btn-primary";
-        button.textContent = "📋 サンプルを全部コピー";
+        button.textContent = "📋 サンプルを全部コピーa";
         button.style.marginBottom = "15px";
 
         button.addEventListener("click", () => {
