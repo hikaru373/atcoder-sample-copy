@@ -69,32 +69,32 @@
     }
 
     async function copySamples(button) {
-        const samples = getSamples();
+        const samples = [];
 
-        console.log("取得したサンプル:", samples);
-
-        if (samples.length === 0) {
-            alert("サンプルがありませんでした。");
+        // 入力例と出力例を直接取得
+        const inputSamples = document.querySelectorAll(
+            '#task-statement pre[id^="pre-sample"]'
+        );
+        if (inputSamples.length === 0) {
+            alert('サンプルがありません');
             return;
         }
-
-        const text = samples
-            .map(sample => `${sample.input}\n${sample.output}`)
-            .join("\n");
-
+        // pre-sample0, pre-sample1, ... の順番で取得
+        inputSamples.forEach((pre) => {
+            samples.push(pre.textContent.trim());
+        });
+        const text = samples.join('\n\n');
         try {
             await navigator.clipboard.writeText(text);
-
             button.textContent = "✓ コピーしました";
-
             setTimeout(() => {
                 button.textContent = "📋 サンプルを全部コピー";
             }, 1500);
-
         } catch (error) {
             console.error("コピー失敗:", error);
             alert("コピーに失敗しました。");
         }
+
     }
 
     function createButton() {
@@ -109,41 +109,16 @@
 
         button.id = BUTTON_ID;
         button.type = "button";
-        button.className = "btn btn-primary";
-        button.textContent = "📋 サンプルを全部コピーa";
+        button.className = "btn btn-primary"; // AtCoderのボタンと同じclass
+        button.textContent = "📋 サンプルを全部コピー";
         button.style.marginBottom = "15px";
 
         button.addEventListener('click', async () => {
-    const samples = [];
+            copySamples(button)
+        });
 
-    // 入力例と出力例を直接取得
-    const inputSamples = document.querySelectorAll(
-        '#task-statement pre[id^="pre-sample"]'
-    );
+                statement.prepend(button);
+            }
 
-    if (inputSamples.length === 0) {
-        alert('サンプルがありません');
-        return;
-    }
-
-    // pre-sample0, pre-sample1, ... の順番で取得
-    inputSamples.forEach((pre, index) => {
-        samples.push(pre.textContent.trim());
-    });
-
-    const text = samples.join('\n\n');
-
-    try {
-        await navigator.clipboard.writeText(text);
-        alert('サンプルを全部コピーしました！');
-    } catch (e) {
-        console.error(e);
-        alert('コピーに失敗しました');
-    }
-});
-
-        statement.prepend(button);
-    }
-
-    createButton();
+            createButton();
 })();
