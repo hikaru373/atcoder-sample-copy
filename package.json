@@ -1,0 +1,7 @@
+{
+  "name": "atcoder-sample-copy",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && cp src/manifest.json src/content.js dist/ && cd dist && zip -r ../atcoder-sample-copy.zip ."
+  }
+}
