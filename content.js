@@ -3,6 +3,7 @@
 
     const BUTTON_ID = "atcoder-sample-copy-button";
 
+    // ボタンの複製防止
     if (document.getElementById(BUTTON_ID)) {
         return;
     }
@@ -10,6 +11,7 @@
     function getSamples() {
         const samples = [];
 
+        // 現時点では #task-statement なしでもいける
         const parts = document.querySelectorAll("#task-statement .part");
 
         let currentInput = null;
