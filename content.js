@@ -86,7 +86,7 @@
             button.textContent = "✓ コピーしました";
 
             setTimeout(() => {
-                button.textContent = "📋 サンプルを全部コピー";
+                button.textContent = "📋 サンプルを全部コピーa";
             }, 1500);
 
         } catch (error) {
