@@ -10,77 +10,58 @@
     function getSamples() {
         const samples = [];
 
-        // 「入力例 1」「入力例 2」... を全部探す
-        const headings = document.querySelectorAll("h3");
+        const parts = document.querySelectorAll("#task-statement .part");
 
-        for (const heading of headings) {
-            const title = heading.textContent.trim();
+        let currentInput = null;
+        let currentNumber = null;
 
-            const match = title.match(/^入力例\s*(\d+)$/);
+        for (const part of parts) {
+            const h3 = part.querySelector("h3");
+            const pre = part.querySelector("pre");
 
+            if (!h3 || !pre) {
+                continue;
+            }
+
+            const title = h3.textContent.trim();
+
+            // 日本語
+            let match = title.match(/^入力例\s*(\d+)$/);
+
+            // 英語
             if (!match) {
+                match = title.match(/^Sample Input\s*(\d+)$/i);
+            }
+
+            if (match) {
+                currentNumber = Number(match[1]);
+                currentInput = pre.textContent.trim();
                 continue;
             }
 
-            const number = Number(match[1]);
+            // 日本語
+            match = title.match(/^出力例\s*(\d+)$/);
 
-            // このh3を含むsection
-            const section = heading.closest("section");
-
-            if (!section) {
-                continue;
+            // 英語
+            if (!match) {
+                match = title.match(/^Sample Output\s*(\d+)$/i);
             }
 
-            // 入力のpre
-            const inputPre = section.querySelector("pre");
+            if (match && currentInput !== null) {
+                const outputNumber = Number(match[1]);
 
-            if (!inputPre) {
-                continue;
-            }
+                if (outputNumber === currentNumber) {
+                    samples.push({
+                        number: currentNumber,
+                        input: currentInput,
+                        output: pre.textContent.trim()
+                    });
 
-            // 「出力例 n」を探す
-            let outputPre = null;
-
-            for (const outputHeading of headings) {
-                const outputTitle = outputHeading.textContent.trim();
-
-                const outputMatch =
-                    outputTitle.match(/^出力例\s*(\d+)$/);
-
-                if (!outputMatch) {
-                    continue;
-                }
-
-                if (Number(outputMatch[1]) !== number) {
-                    continue;
-                }
-
-                const outputSection =
-                    outputHeading.closest("section");
-
-                if (!outputSection) {
-                    continue;
-                }
-
-                outputPre = outputSection.querySelector("pre");
-
-                if (outputPre) {
-                    break;
+                    currentInput = null;
+                    currentNumber = null;
                 }
             }
-
-            if (!outputPre) {
-                continue;
-            }
-
-            samples.push({
-                number: number,
-                input: inputPre.textContent.trim(),
-                output: outputPre.textContent.trim()
-            });
         }
-
-        samples.sort((a, b) => a.number - b.number);
 
         return samples;
     }
@@ -96,9 +77,7 @@
         }
 
         const text = samples
-            .map(sample => {
-                return `${sample.input}\n${sample.output}`;
-            })
+            .map(sample => `${sample.input}\n${sample.output}`)
             .join("\n");
 
         try {
@@ -111,15 +90,13 @@
             }, 1500);
 
         } catch (error) {
-            console.error(error);
+            console.error("コピー失敗:", error);
             alert("コピーに失敗しました。");
         }
     }
 
     function createButton() {
-        // 問題文を探す
-        const statement =
-            document.querySelector("#task-statement");
+        const statement = document.querySelector("#task-statement");
 
         if (!statement) {
             console.error("#task-statement が見つかりません");
@@ -131,10 +108,7 @@
         button.id = BUTTON_ID;
         button.type = "button";
         button.className = "btn btn-primary";
-
-        button.textContent =
-            "📋 サンプルを全部コピー";
-
+        button.textContent = "📋 サンプルを全部コピー";
         button.style.marginBottom = "15px";
 
         button.addEventListener("click", () => {
