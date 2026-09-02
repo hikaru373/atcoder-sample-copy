@@ -17,7 +17,7 @@
 
 ## 関連Issue
 
-<!-- 関連するIssue番号 -->
+<!-- 関連するIssue -->
 
 Closes #
 
