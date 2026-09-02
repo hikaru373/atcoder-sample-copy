@@ -3,7 +3,6 @@
 
     const BUTTON_ID = "atcoder-sample-copy-button";
 
-    // すでにボタンがあれば終了
     if (document.getElementById(BUTTON_ID)) {
         return;
     }
@@ -11,58 +10,76 @@
     function getSamples() {
         const samples = [];
 
-        // 「入力例 1」「入力例 2」... をすべて取得
+        // 「入力例 1」「入力例 2」... を全部探す
         const headings = document.querySelectorAll("h3");
 
         for (const heading of headings) {
             const title = heading.textContent.trim();
 
-            const inputMatch = title.match(/^入力例\s*(\d+)$/);
+            const match = title.match(/^入力例\s*(\d+)$/);
 
-            if (!inputMatch) {
+            if (!match) {
                 continue;
             }
 
-            const number = inputMatch[1];
+            const number = Number(match[1]);
 
-            // 入力例の h3 の直後にある pre
-            const input = heading.parentElement.querySelector("pre");
+            // このh3を含むsection
+            const section = heading.closest("section");
 
-            if (!input) {
+            if (!section) {
                 continue;
             }
 
-            // 同じ番号の「出力例」を探す
-            let outputHeading = null;
+            // 入力のpre
+            const inputPre = section.querySelector("pre");
 
-            for (const h3 of headings) {
-                const outputTitle = h3.textContent.trim();
+            if (!inputPre) {
+                continue;
+            }
 
-                if (outputTitle === `出力例 ${number}`) {
-                    outputHeading = h3;
+            // 「出力例 n」を探す
+            let outputPre = null;
+
+            for (const outputHeading of headings) {
+                const outputTitle = outputHeading.textContent.trim();
+
+                const outputMatch =
+                    outputTitle.match(/^出力例\s*(\d+)$/);
+
+                if (!outputMatch) {
+                    continue;
+                }
+
+                if (Number(outputMatch[1]) !== number) {
+                    continue;
+                }
+
+                const outputSection =
+                    outputHeading.closest("section");
+
+                if (!outputSection) {
+                    continue;
+                }
+
+                outputPre = outputSection.querySelector("pre");
+
+                if (outputPre) {
                     break;
                 }
             }
 
-            if (!outputHeading) {
-                continue;
-            }
-
-            // 出力例の直後の pre
-            const output = outputHeading.parentElement.querySelector("pre");
-
-            if (!output) {
+            if (!outputPre) {
                 continue;
             }
 
             samples.push({
-                number: Number(number),
-                input: input.textContent.trim(),
-                output: output.textContent.trim()
+                number: number,
+                input: inputPre.textContent.trim(),
+                output: outputPre.textContent.trim()
             });
         }
 
-        // サンプル番号順に並べる
         samples.sort((a, b) => a.number - b.number);
 
         return samples;
@@ -71,12 +88,13 @@
     async function copySamples(button) {
         const samples = getSamples();
 
+        console.log("取得したサンプル:", samples);
+
         if (samples.length === 0) {
-            alert("サンプルが見つかりませんでした。");
+            alert("サンプルがありませんでした。");
             return;
         }
 
-        // 入力例 + 出力例を全部まとめる
         const text = samples
             .map(sample => {
                 return `${sample.input}\n${sample.output}`;
@@ -99,10 +117,12 @@
     }
 
     function createButton() {
-        // 問題文を取得
-        const statement = document.querySelector("#task-statement");
+        // 問題文を探す
+        const statement =
+            document.querySelector("#task-statement");
 
         if (!statement) {
+            console.error("#task-statement が見つかりません");
             return;
         }
 
@@ -110,9 +130,10 @@
 
         button.id = BUTTON_ID;
         button.type = "button";
-        button.textContent = "📋 サンプルを全部コピー";
-
         button.className = "btn btn-primary";
+
+        button.textContent =
+            "📋 サンプルを全部コピー";
 
         button.style.marginBottom = "15px";
 
@@ -120,7 +141,6 @@
             copySamples(button);
         });
 
-        // 問題文の一番上に1個だけ追加
         statement.prepend(button);
     }
 
