@@ -69,32 +69,32 @@
     }
 
     async function copySamples(button) {
-        const samples = getSamples();
+        const samples = [];
 
-        console.log("取得したサンプル:", samples);
-
-        if (samples.length === 0) {
-            alert("サンプルがありませんでした。");
+        // 入力例と出力例を直接取得
+        const inputSamples = document.querySelectorAll(
+            '#task-statement pre[id^="pre-sample"]'
+        );
+        if (inputSamples.length === 0) {
+            alert('サンプルがありません');
             return;
         }
-
-        const text = samples
-            .map(sample => `${sample.input}\n${sample.output}`)
-            .join("\n");
-
+        // pre-sample0, pre-sample1, ... の順番で取得
+        inputSamples.forEach((pre) => {
+            samples.push(pre.textContent.trim());
+        });
+        const text = samples.join('\n\n');
         try {
             await navigator.clipboard.writeText(text);
-
             button.textContent = "✓ コピーしました";
-
             setTimeout(() => {
                 button.textContent = "📋 サンプルを全部コピー";
             }, 1500);
-
         } catch (error) {
             console.error("コピー失敗:", error);
             alert("コピーに失敗しました。");
         }
+
     }
 
     function createButton() {
@@ -114,11 +114,11 @@
         button.style.marginBottom = "15px";
 
         button.addEventListener('click', async () => {
-            await copySamples(button);
+            copySamples(button)
         });
 
-        statement.prepend(button);
-    }
+                statement.prepend(button);
+            }
 
-    createButton();
+            createButton();
 })();
