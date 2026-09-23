@@ -71,10 +71,14 @@
     async function copySamples(button) {
         const samples = [];
 
+        const lang = document.documentElement.lang;
         // 入力例と出力例を直接取得
-        const inputSamples = document.querySelectorAll(
-            '#task-statement pre[id^="pre-sample"]'
-        );
+        const selector = lang === "en"
+            ? "#task-statement .lang-en pre[id^='pre-sample']"
+            : "#task-statement .lang-ja pre[id^='pre-sample']";
+        const inputSamples = document.querySelectorAll(selector);
+
+
         if (inputSamples.length === 0) {
             alert('サンプルがありません');
             return;
