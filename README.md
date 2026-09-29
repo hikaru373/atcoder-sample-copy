@@ -58,7 +58,7 @@ atcoder-sample-copy
 <br><br><br>
 # ⑦ データ構造
 AtCoderの問題ページに存在するサンプル入出力を HTML から取得しています。<br>
-サンプルは、pre要素に格納されており、pre-sample0, pre-sample1, pre-sample2 ... のような ID が付けられています。<br>
+AtCoderでは、サンプルが pre-sample0, pre-sample1, pre-sample2 ... のような ID が付けられています。<br>
 取得したサンプルはページ上の順番を維持したまま配列に格納し、入力例と出力例をまとめて一つのテキストとしてクリップボードへコピーします。
 <br><br><br>
 # ⑧ 使用技術
