@@ -11,7 +11,7 @@
 <br><br><br>
 # ① 概要
 AtCoderの問題ページに表示されるすべてのサンプル入出力を、ワンクリックでコピーできる Chrome 拡張機能です。<br>
-現在、ローカルでAtCoderの解答を自動テストするプログラムも開発しており、**2026年9月中の完成を予定しています。**
+[ローカル自動テストプログラム](https://github.com/hikaru373/atcoder-python-auto-test)と組み合わせることで、コピーしたサンプルを使ってテストを実行できます。
 <br><br><br>
 # ② 背景
 AtCoderで問題を解く際、サンプル入出力をローカル環境でテストするために、問題ページから入力例・出力例を一つずつコピーする必要がありました。<br>
@@ -23,12 +23,13 @@ AtCoderで問題を解く際、サンプル入出力をローカル環境でテ�
 - 日本語・英語の問題ページに対応
 <br><br><br>
 # ④ セットアップ手順
+こちらの拡張機能をインストールしてください。
+
+[Chrome 拡張機能](https://chromewebstore.google.com/detail/atcoder-sample-copy/bjankhpbegjhlkihejjacecbnhbmhhef?pli=1)
+<br><br><br>
 # ⑤ 使い方
-## Chrome 拡張機能
-[こちらから](https://chromewebstore.google.com/detail/atcoder-sample-copy/bjankhpbegjhlkihejjacecbnhbmhhef?pli=1)
-## ローカル自動テストプログラム
-現在制作中です。<br>
-2026年9月中の完成を予定しています。
+AtCoderの問題ページに表示される「サンプルを全部コピー」ボタンをクリックすると、ページ内のすべてのサンプル入出力を一括でコピーできます。<br>
+コピーしたサンプルは、[ローカル自動テストプログラム](https://github.com/hikaru373/atcoder-python-auto-test)で使用できます。
 <br><br><br>
 # ⑥ ディレクトリ構成
 <pre>
