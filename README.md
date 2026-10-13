@@ -28,6 +28,8 @@ AtCoderで問題を解く際、サンプル入出力をローカル環境でテ�
 [Chrome 拡張機能](https://chromewebstore.google.com/detail/atcoder-sample-copy/bjankhpbegjhlkihejjacecbnhbmhhef?pli=1)
 <br><br><br>
 # ⑤ 使い方
+![使い方画像](https://github.com/user-attachments/assets/4c1e0911-58cc-480a-8b12-b6a50723aaa5)
+<br><br>
 AtCoderの問題ページに表示される「サンプルを全部コピー」ボタンをクリックすると、ページ内のすべてのサンプル入出力を一括でコピーできます。<br>
 コピーしたサンプルは、[ローカル自動テストプログラム](https://github.com/hikaru373/atcoder-python-auto-test)で使用できます。
 <br><br><br>
