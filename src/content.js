@@ -8,65 +8,8 @@
         return;
     }
 
-    function getSamples() {
-        const samples = [];
-
-        // 現時点では #task-statement なしでもいける
-        const parts = document.querySelectorAll("#task-statement .part");
-
-        let currentInput = null;
-        let currentNumber = null;
-
-        for (const part of parts) {
-            const h3 = part.querySelector("h3");
-            const pre = part.querySelector("pre");
-
-            if (!h3 || !pre) {
-                continue;
-            }
-
-            const title = h3.textContent.trim();
-
-            // 日本語
-            let match = title.match(/^入力例\s*(\d+)$/);
-
-            // 英語
-            if (!match) {
-                match = title.match(/^Sample Input\s*(\d+)$/i);
-            }
-
-            if (match) {
-                currentNumber = Number(match[1]);
-                currentInput = pre.textContent.trim();
-                continue;
-            }
-
-            // 日本語
-            match = title.match(/^出力例\s*(\d+)$/);
-
-            // 英語
-            if (!match) {
-                match = title.match(/^Sample Output\s*(\d+)$/i);
-            }
-
-            if (match && currentInput !== null) {
-                const outputNumber = Number(match[1]);
-
-                if (outputNumber === currentNumber) {
-                    samples.push({
-                        number: currentNumber,
-                        input: currentInput,
-                        output: pre.textContent.trim()
-                    });
-
-                    currentInput = null;
-                    currentNumber = null;
-                }
-            }
-        }
-
-        return samples;
-    }
+    // 連続クリック時に前のタイマーを止めるため保持
+    let resetTimer = null;
 
     async function copySamples(button) {
         const samples = [];
@@ -78,20 +21,20 @@
             : "#task-statement .lang-ja pre[id^='pre-sample']";
         const inputSamples = document.querySelectorAll(selector);
 
-
         if (inputSamples.length === 0) {
-            alert('サンプルがありません');
+            alert("サンプルがありません");
             return;
         }
         // pre-sample0, pre-sample1, ... の順番で取得
         inputSamples.forEach((pre) => {
-            samples.push(pre.textContent.trim());
+            samples.push(pre.textContent.trimEnd());
         });
-        const text = samples.join('\n\n');
+        const text = samples.join("\n\n");
         try {
             await navigator.clipboard.writeText(text);
             button.textContent = "✓ コピーしました";
-            setTimeout(() => {
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
                 button.textContent = "📋 サンプルを全部コピー";
             }, 1500);
         } catch (error) {
@@ -117,12 +60,10 @@
         button.textContent = "📋 サンプルを全部コピー";
         button.style.marginBottom = "15px";
 
-        button.addEventListener('click', async () => {
-            copySamples(button)
-        });
+        button.addEventListener("click", () => copySamples(button));
 
-                statement.prepend(button);
-            }
+        statement.prepend(button);
+    }
 
-            createButton();
+    createButton();
 })();
