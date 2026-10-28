@@ -8,66 +8,6 @@
         return;
     }
 
-    function getSamples() {
-        const samples = [];
-
-        // 現時点では #task-statement なしでもいける
-        const parts = document.querySelectorAll("#task-statement .part");
-
-        let currentInput = null;
-        let currentNumber = null;
-
-        for (const part of parts) {
-            const h3 = part.querySelector("h3");
-            const pre = part.querySelector("pre");
-
-            if (!h3 || !pre) {
-                continue;
-            }
-
-            const title = h3.textContent.trim();
-
-            // 日本語
-            let match = title.match(/^入力例\s*(\d+)$/);
-
-            // 英語
-            if (!match) {
-                match = title.match(/^Sample Input\s*(\d+)$/i);
-            }
-
-            if (match) {
-                currentNumber = Number(match[1]);
-                currentInput = pre.textContent.trim();
-                continue;
-            }
-
-            // 日本語
-            match = title.match(/^出力例\s*(\d+)$/);
-
-            // 英語
-            if (!match) {
-                match = title.match(/^Sample Output\s*(\d+)$/i);
-            }
-
-            if (match && currentInput !== null) {
-                const outputNumber = Number(match[1]);
-
-                if (outputNumber === currentNumber) {
-                    samples.push({
-                        number: currentNumber,
-                        input: currentInput,
-                        output: pre.textContent.trim()
-                    });
-
-                    currentInput = null;
-                    currentNumber = null;
-                }
-            }
-        }
-
-        return samples;
-    }
-
     async function copySamples(button) {
         const samples = [];
 
