@@ -8,6 +8,9 @@
         return;
     }
 
+    // 連続クリック時に前のタイマーを止めるため保持
+    let resetTimer = null;
+
     async function copySamples(button) {
         const samples = [];
 
@@ -30,7 +33,8 @@
         try {
             await navigator.clipboard.writeText(text);
             button.textContent = "✓ コピーしました";
-            setTimeout(() => {
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
                 button.textContent = "📋 サンプルを全部コピー";
             }, 1500);
         } catch (error) {
