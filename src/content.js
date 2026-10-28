@@ -18,16 +18,15 @@
             : "#task-statement .lang-ja pre[id^='pre-sample']";
         const inputSamples = document.querySelectorAll(selector);
 
-
         if (inputSamples.length === 0) {
-            alert('サンプルがありません');
+            alert("サンプルがありません");
             return;
         }
         // pre-sample0, pre-sample1, ... の順番で取得
         inputSamples.forEach((pre) => {
             samples.push(pre.textContent.trimEnd());
         });
-        const text = samples.join('\n\n');
+        const text = samples.join("\n\n");
         try {
             await navigator.clipboard.writeText(text);
             button.textContent = "✓ コピーしました";
@@ -59,8 +58,8 @@
 
         button.addEventListener("click", () => copySamples(button));
 
-                statement.prepend(button);
-            }
+        statement.prepend(button);
+    }
 
-            createButton();
+    createButton();
 })();
