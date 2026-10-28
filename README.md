@@ -42,7 +42,6 @@ atcoder-sample-copy
 ├── LICENSE
 ├── package.json
 ├── README.md
-├── test.html
 ├── src
 │    ├── content.js
 │    └── manifest.json
