@@ -25,7 +25,7 @@
         }
         // pre-sample0, pre-sample1, ... の順番で取得
         inputSamples.forEach((pre) => {
-            samples.push(pre.textContent.trim());
+            samples.push(pre.textContent.trimEnd());
         });
         const text = samples.join('\n\n');
         try {
