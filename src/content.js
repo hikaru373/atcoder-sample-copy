@@ -57,9 +57,7 @@
         button.textContent = "📋 サンプルを全部コピー";
         button.style.marginBottom = "15px";
 
-        button.addEventListener('click', async () => {
-            copySamples(button)
-        });
+        button.addEventListener("click", () => copySamples(button));
 
                 statement.prepend(button);
             }
