@@ -60,7 +60,7 @@ AtCoderでは、サンプルが pre-sample0, pre-sample1, pre-sample2 ... のよ
 取得したサンプルはページ上の順番を維持したまま配列に格納し、入力例と出力例をまとめて一つのテキストとしてクリップボードへコピーします。
 <br><br><br>
 # ⑧ 使用技術
-- **フロントエンド**：JavaScript、HTML / CSS（テスト用）
+- **フロントエンド**：JavaScript
 - **バックエンド**：なし
 - **データベース**：なし
 - **インフラ**：Chrome Extension Manifest V3
