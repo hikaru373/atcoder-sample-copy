@@ -2,6 +2,6 @@
   "name": "atcoder-sample-copy",
   "private": true,
   "scripts": {
-    "build": "rm -rf dist && mkdir -p dist && cp src/manifest.json src/content.js dist/ && cd dist && zip -r ../atcoder-sample-copy.zip ."
+    "build": "rm -rf dist atcoder-sample-copy.zip && mkdir -p dist && cp src/manifest.json src/content.js dist/ && cd dist && zip -r ../atcoder-sample-copy.zip ."
   }
 }
